@@ -1,0 +1,2 @@
+# Local env with secrets (copy from .env.example)
+env.local

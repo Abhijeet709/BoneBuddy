@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bone Buddy — DICOM Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1>Bone Buddy</h1>
+        <p class="tagline">Upload a DICOM image for analysis</p>
+      </header>
+
+      <main class="main">
+        <section class="upload-section" id="uploadSection">
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="fileInput" accept=".dcm,.dicom,image/*" hidden />
+            <div class="dropzone-content" id="dropzoneContent">
+              <span class="dropzone-icon">↑</span>
+              <p>Drag and drop a DICOM file here, or <button type="button" class="link-button" id="browseBtn">browse</button></p>
+            </div>
+            <div class="dropzone-file" id="dropzoneFile" hidden>
+              <span class="file-name" id="fileName"></span>
+              <button type="button" class="remove-file" id="removeFile" aria-label="Remove file">×</button>
+            </div>
+          </div>
+          <button type="button" class="submit-btn" id="submitBtn" disabled>Analyze</button>
+        </section>
+
+        <div class="status" id="status" hidden>
+          <div class="spinner" id="spinner"></div>
+          <p id="statusText">Analyzing…</p>
+        </div>
+
+        <section class="results" id="results" hidden>
+          <h2>Results</h2>
+          <div class="results-grid" id="resultsGrid"></div>
+          <div class="report-block" id="reportBlock"></div>
+          <p class="warning" id="warning"></p>
+        </section>
+
+        <section class="error" id="error" hidden>
+          <p class="error-message" id="errorMessage"></p>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
