@@ -9,3 +9,5 @@ torchvision
 pillow
 python-multipart
 openai
+transformers
+tqdm

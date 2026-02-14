@@ -48,6 +48,19 @@ class DummyBoneAge(nn.Module):
 
 
 def main():
+    import os
+    os.makedirs(WEIGHTS_DIR, exist_ok=True)
+
+    # DINOv2 body-part head (7 MURA classes): dummy so BodyPartModel can load without training
+    head = nn.Linear(768, 7)
+    checkpoint = {
+        "state_dict": head.state_dict(),
+        "config": {"hidden_size": 768, "num_classes": 7, "backbone": "facebook/dinov2-base"},
+    }
+    dinov2_head_path = os.path.join(WEIGHTS_DIR, "body_part_dinov2_head.pt")
+    torch.save(checkpoint, dinov2_head_path)
+    print(f"Saved {dinov2_head_path} (dummy DINOv2 head; run scripts/train_body_part.py on MURA for real weights)")
+
     # Input shape matches: ToTensor()(image).unsqueeze(0) -> (1, 1, 224, 224)
     example = torch.rand(1, 1, 224, 224)
 

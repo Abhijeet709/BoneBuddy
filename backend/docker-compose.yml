@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - weights:/app/weights
+    environment:
+      - HF_HOME=/app/.cache/huggingface
+
+  train:
+    build: .
+    command: >
+      python scripts/train_body_part.py
+      --data_dir /data/mura
+      --epochs 5
+      --batch_size 32
+    volumes:
+      - weights:/app/weights
+      # Mount MURA dataset. Set MURA_DATA_DIR or use default.
+      - ${MURA_DATA_DIR:-./mura_dataset}:/data/mura:ro
+    environment:
+      - HF_HOME=/app/.cache/huggingface
+    profiles:
+      - train
+
+volumes:
+  weights:

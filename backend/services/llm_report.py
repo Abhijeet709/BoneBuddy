@@ -3,10 +3,16 @@ from openai import OpenAI
 
 _client = None
 
+# Default to Ollama (local, free Llama). Set LLM_BASE_URL for OpenAI or other compatible APIs.
+OLLAMA_BASE = "http://localhost:11434/v1"
+DEFAULT_MODEL = "llama3.2"
+
 def _get_client():
     global _client
     if _client is None:
-        _client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        base_url = os.environ.get("LLM_BASE_URL", OLLAMA_BASE)
+        api_key = os.environ.get("OPENAI_API_KEY", "ollama")
+        _client = OpenAI(base_url=base_url, api_key=api_key)
     return _client
 
 def generate_report(body_part, fracture, bone_age):
@@ -19,8 +25,9 @@ def generate_report(body_part, fracture, bone_age):
 
     try:
         client = _get_client()
+        model = os.environ.get("LLM_MODEL", DEFAULT_MODEL)
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2
         )
