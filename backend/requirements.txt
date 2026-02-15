@@ -3,7 +3,11 @@ uvicorn
 python-dotenv
 pydicom
 numpy
-opencv-python
+opencv-python-headless
+# For GPU: install PyTorch with CUDA first (Python 3.14 needs cu126/cu128):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+#   pip install -r requirements.txt
+# Or run: scripts/install_pytorch_gpu.ps1 (Windows)
 torch
 torchvision
 pillow

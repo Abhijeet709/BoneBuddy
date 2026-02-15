@@ -2,15 +2,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system deps (optional, for some image libs)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python deps
+# Install Python deps; use PyTorch CPU index for reliable Linux wheels
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Copy application
 COPY . .

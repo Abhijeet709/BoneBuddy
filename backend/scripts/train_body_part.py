@@ -44,6 +44,8 @@ def discover_mura_images(root, split):
         idx = LABEL_TO_IDX[part_lower]
         for dirpath, _, filenames in os.walk(part_path):
             for fname in filenames:
+                if fname.startswith("._"):
+                    continue  # skip macOS resource-fork metadata files
                 if fname.lower().endswith((".png", ".jpg", ".jpeg")):
                     pairs.append((os.path.join(dirpath, fname), idx))
     return pairs
